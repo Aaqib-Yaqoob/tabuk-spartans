@@ -389,7 +389,7 @@
     var draw = function () {
       var q = $("pSearch").value.toLowerCase(), s = $("pSort").value;
       var list = players().filter(function (p) { return p.display_name.toLowerCase().indexOf(q) >= 0; });
-      list.sort(function (a, b) { if (s === "name") return a.display_name.localeCompare(b.display_name); return pm(b.player_id, v)[s] - pm(a.player_id, v)[s] || a.display_name.localeCompare(b.display_name); });
+      list.sort(function (a, b) { if (s === "squad") { var ar = a.tag === "C" ? 0 : a.tag === "VC" ? 1 : 2, br = b.tag === "C" ? 0 : b.tag === "VC" ? 1 : 2; retu if (s === "squad") { var ar = a.tag === "C" ? 0 : a.tag === "VC" ? 1 : 2, br = b.tag === "C" ? 0 : b.tag === "VC" ? 1 : 2; retu if (s === "name") return a.display_name.localeCompare(b.display_name); return pm(b.player_id, v)[s] - pm(a.player_id, v)[s] || a.display_name.localeCompare(b.display_name); });
       $("pGrid").innerHTML = list.length ? list.map(function (p) {
         var m = pm(p.player_id, v);
         return '<a class="card pcard" href="#/player/' + esc(p.player_id) + '"><div class="pc-top">' + avatar(p, "lg") + '<div style="min-width:0"><div class="name">' + esc(p.display_name) + (p.tag ? ' <span class="badge tag">' + esc(p.tag) + "</span>" : "") + '</div><div class="role">' + esc(p.role || "") + (p.shirt_number != null ? " · #" + esc(p.shirt_number) : "") + "</div></div></div>" +
