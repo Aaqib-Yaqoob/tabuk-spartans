@@ -345,7 +345,7 @@
   function stat(k, v, cls) { return '<div class="stat"><div class="k">' + esc(k) + '</div><div class="v ' + (cls || "") + '">' + esc(v) + "</div></div>"; }
   function latestBlock(m, onMatchPage) {
     var mvp = m.mvp && m.mvp.player_ids.length ? m.mvp.player_ids : [];
-    return '<div class="vs"><div><div class="team">Spartans</div><div class="sc">' + esc(m.ts_score || "—") + '</div></div><div class="mid">VS</div><div><div class="team">' + esc(m.opponent) + '</div><div class="sc">' + esc(m.opp_score || "—") + "</div></div></div>" +
+    return '<div class="vs"><div><div class="team">Tabuk Spartans</div><div class="sc">' + esc(m.ts_score || "—") + '</div></div><div class="mid">VS</div><div><div class="team">' + esc(m.opponent) + '</div><div class="sc">' + esc(m.opp_score || "—") + "</div></div></div>" +
       '<div style="text-align:center;margin-bottom:10px">' + resChip(m.result) + ' <b class="' + ({ W: "win", L: "loss", T: "tie", N: "nr" })[resCode(m.result)] + '">' + esc(m.result) + (m.result_note ? " " + esc(m.result_note) : "") + '</b><div class="small muted">' + esc(fmtDate(m.date, { weekday: "short" })) + " · " + esc(m.competition) + " · " + esc(m.format) + (m.venue ? " · " + esc(m.venue) : "") + "</div></div>" +
       (m.summary ? '<p class="muted" style="margin:0 0 10px">' + esc(m.summary) + "</p>" : "") +
       (mvp.length ? '<div class="mvp-line"><span class="badge mvp">' + (mvp.length > 1 ? "Joint MVPs" : "Match MVP") + "</span>" + mvp.map(function (id) { return '<span class="pcell">' + avatar(player(id), "sm") + plink(id) + "</span>"; }).join("") + '<span class="small dim">' + m.mvp.points + " pts</span></div>" : "") +
