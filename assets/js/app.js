@@ -343,9 +343,21 @@
       options: { indexAxis: "y", scales: { x: { stacked: true, grid: { color: "rgba(150,180,240,.08)" } }, y: { stacked: true, grid: { display: false } } } } });
   }
   function stat(k, v, cls) { return '<div class="stat"><div class="k">' + esc(k) + '</div><div class="v ' + (cls || "") + '">' + esc(v) + "</div></div>"; }
+  function teamLogo(name, own) {
+    if (own) return '<img src="' + esc(CFG.LOGO_URL || 'assets/img/team-logo.png') + '" alt="Tabuk Spartans logo" style="display:block;width:90px;height:90px;object-fit:contain;margin:0 auto 10px" onerror="this.style.display=\'none\'">';
+    var key = String(name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    var logos = {
+      taifroyals:[30,450], dhahrandynamites:[325,450], albahathunder:[635,450],
+      tabukspartans:[950,450], abhachallengers:[30,790], jeddahstrikers:[325,790],
+      riyadhknights:[635,790], alkhobarsultans:[950,790], khobarsultans:[950,790]
+    };
+    var xy = logos[key];
+    if (!xy) return '<span aria-hidden="true" style="display:flex;width:90px;height:90px;align-items:center;justify-content:center;margin:0 auto 10px;border-radius:16px;background:#14264b;color:#f3d27a;font-weight:bold;font-size:24px">' + esc(initials(name)) + '</span>';
+    return '<span role="img" aria-label="' + esc(name) + ' logo" style="display:block;position:relative;overflow:hidden;width:90px;height:90px;border-radius:14px;margin:0 auto 10px"><img src="assets/img/kpl-teams.jpeg" alt="" style="position:absolute;max-width:none!important;width:403.071px!important;height:403.071px!important;left:-' + (xy[0] * 90 / 280) + 'px;top:-' + (xy[1] * 90 / 280) + 'px"></span>';
+  }
   function latestBlock(m, onMatchPage) {
     var mvp = m.mvp && m.mvp.player_ids.length ? m.mvp.player_ids : [];
-    return '<div class="vs"><div><div class="team">Tabuk Spartans</div><div class="sc">' + esc(m.ts_score || "—") + '</div></div><div class="mid">VS</div><div><div class="team">' + esc(m.opponent) + '</div><div class="sc">' + esc(m.opp_score || "—") + "</div></div></div>" +
+    return '<div class="vs"><div>' + teamLogo('Tabuk Spartans', true) + '<div class="team">Tabuk Spartans</div><div class="sc">' + esc(m.ts_score || "—") + '</div></div><div class="mid">VS</div><div>' + teamLogo(m.opponent, false) + '<div class="team">' + esc(m.opponent) + '</div><div class="sc">' + esc(m.opp_score || "—") + "</div></div></div>" +
       '<div style="text-align:center;margin-bottom:10px">' + resChip(m.result) + ' <b class="' + ({ W: "win", L: "loss", T: "tie", N: "nr" })[resCode(m.result)] + '">' + esc(m.result) + (m.result_note ? " " + esc(m.result_note) : "") + '</b><div class="small muted">' + esc(fmtDate(m.date, { weekday: "short" })) + " · " + esc(m.competition) + " · " + esc(m.format) + (m.venue ? " · " + esc(m.venue) : "") + "</div></div>" +
       (m.summary ? '<p class="muted" style="margin:0 0 10px">' + esc(m.summary) + "</p>" : "") +
       (mvp.length ? '<div class="mvp-line"><span class="badge mvp">' + (mvp.length > 1 ? "Joint MVPs" : "Match MVP") + "</span>" + mvp.map(function (id) { return '<span class="pcell">' + avatar(player(id), "sm") + plink(id) + "</span>"; }).join("") + '<span class="small dim">' + m.mvp.points + " pts</span></div>" : "") +
