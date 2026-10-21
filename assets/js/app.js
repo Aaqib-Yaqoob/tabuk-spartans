@@ -50,7 +50,13 @@
   function recall(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 
   // ------------------------------------------------------------------ data access
-  function players() { return (S.data && S.data.squad) || []; }
+  function players() {
+    var order = ["TS-P010", "TS-P008", "TS-P001", "TS-P002", "TS-P003", "TS-P004", "TS-P005", "TS-P006", "TS-P007", "TS-P009", "TS-P011", "TS-P012", "TS-P013", "TS-P014", "TS-P015", "TS-P016", "TS-P017"];
+    return ((S.data && S.data.squad) || []).slice().sort(function (a, b) {
+      var ai = order.indexOf(a.player_id), bi = order.indexOf(b.player_id);
+      return (ai < 0 ? order.length : ai) - (bi < 0 ? order.length : bi);
+    });
+  }
   function player(id) { return players().find(function (p) { return p.player_id === id; }); }
   function match(id) { return (S.data.matches || []).find(function (m) { return m.match_id === id; }); }
   function viewKey() { return DIMS.map(function (d) { return S.filters[d]; }).join("||"); }
@@ -384,12 +390,12 @@
   function pPlayers() {
     var v = curView() || { players: {} };
     var html = '<div class="page-head"><div><div class="eyebrow">' + esc((S.data.matches || []).length ? filterLabel() : "Squad") + '</div><h1>Players</h1><p class="sub">' + players().length + ' players · tap a player for their full profile.</p></div></div>' +
-      '<div class="searchbar"><input type="search" id="pSearch" placeholder="Search player…" aria-label="Search players"><select id="pSort" aria-label="Sort players" style="max-width:220px"><option value="name">Sort: name</option><option value="pts_total">Sort: contribution</option><option value="runs">Sort: runs</option><option value="wickets">Sort: wickets</option><option value="matches">Sort: matches</option></select></div><div class="pcards" id="pGrid"></div>';
+      '<div class="searchbar"><input type="search" id="pSearch" placeholder="Search player…" aria-label="Search players"><select id="pSort" aria-label="Sort players" style="max-width:220px"><option value="name">Sort: team order</option><option value="pts_total">Sort: contribution</option><option value="runs">Sort: runs</option><option value="wickets">Sort: wickets</option><option value="matches">Sort: matches</option></select></div><div class="pcards" id="pGrid"></div>';
     view.innerHTML = html;
     var draw = function () {
       var q = $("pSearch").value.toLowerCase(), s = $("pSort").value;
       var list = players().filter(function (p) { return p.display_name.toLowerCase().indexOf(q) >= 0; });
-      list.sort(function (a, b) { if (s === "squad") { var ar = a.tag === "C" ? 0 : a.tag === "VC" ? 1 : 2, br = b.tag === "C" ? 0 : b.tag === "VC" ? 1 : 2; retu if (s === "squad") { var ar = a.tag === "C" ? 0 : a.tag === "VC" ? 1 : 2, br = b.tag === "C" ? 0 : b.tag === "VC" ? 1 : 2; retu if (s === "name") return a.display_name.localeCompare(b.display_name); return pm(b.player_id, v)[s] - pm(a.player_id, v)[s] || a.display_name.localeCompare(b.display_name); });
+      if (s !== "name") list.sort(function (a, b) { return pm(b.player_id, v)[s] - pm(a.player_id, v)[s] || a.display_name.localeCompare(b.display_name); });
       $("pGrid").innerHTML = list.length ? list.map(function (p) {
         var m = pm(p.player_id, v);
         return '<a class="card pcard" href="#/player/' + esc(p.player_id) + '"><div class="pc-top">' + avatar(p, "lg") + '<div style="min-width:0"><div class="name">' + esc(p.display_name) + (p.tag ? ' <span class="badge tag">' + esc(p.tag) + "</span>" : "") + '</div><div class="role">' + esc(p.role || "") + (p.shirt_number != null ? " · #" + esc(p.shirt_number) : "") + "</div></div></div>" +

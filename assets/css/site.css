@@ -256,14 +256,3 @@ table.t{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeri
   .profile-head > div:last-child{flex-basis:100%}
   .av.xl{--s:84px}
 }
-.crest {
-  width: 120px !important;
-  height: 120px !important;
-  flex: 0 0 120px !important;
-}
-
-.crest img {
-  width: 120px !important;
-  height: 120px !important;
-  object-fit: contain !important;
-}

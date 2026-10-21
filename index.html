@@ -10,7 +10,19 @@
 <meta property="og:description" content="Results, leaderboards, player profiles and match scorecards.">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/vendor/fonts/barlow-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/site.css?v=repair-20261021">
+<style>
+.crest { width:120px!important; height:120px!important; flex:0 0 120px!important; }
+.crest img { width:100%!important; height:100%!important; object-fit:contain!important; }
+.top-inner { height:auto!important; min-height:140px; flex-wrap:wrap; }
+@media(max-width:700px) {
+  .top-inner { gap:12px; padding-top:12px; padding-bottom:12px; }
+  .brand { min-width:0; }
+  .nav { order:3; width:100%; flex:1 0 100%; overflow-x:auto; }
+  .pub { margin-left:auto; }
+  .pub-text { display:none; }
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -62,8 +74,8 @@
   </div>
 </footer>
 
-<script src="assets/js/config.js"></script>
+<script src="assets/js/config.js?v=repair-20261021"></script>
 <script src="assets/vendor/chart.umd.min.js" defer></script>
-<script src="assets/js/app.js" defer></script>
+<script src="assets/js/app.js?v=repair-20261021" defer></script>
 </body>
 </html>
