@@ -347,13 +347,13 @@
     if (own) return '<img src="' + esc(CFG.LOGO_URL || 'assets/img/team-logo.png') + '" alt="Tabuk Spartans logo" style="display:block;width:90px;height:90px;object-fit:contain;margin:0 auto 10px" onerror="this.style.display=\'none\'">';
     var key = String(name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
     var logos = {
-      taifroyals:[30,450], dhahrandynamites:[325,450], albahathunder:[635,450],
-      tabukspartans:[950,450], abhachallengers:[30,790], jeddahstrikers:[325,790],
-      riyadhknights:[635,790], alkhobarsultans:[950,790], khobarsultans:[950,790]
+      taifroyals:'taif-royals', dhahrandynamites:'dhahran-dynamites', albahathunder:'al-baha-thunder',
+      tabukspartans:'tabuk-spartans', abhachallengers:'abha-challengers', jeddahstrikers:'jeddah-strikers',
+      riyadhknights:'riyadh-knights', alkhobarsultans:'al-khobar-sultans', khobarsultans:'al-khobar-sultans'
     };
     var xy = logos[key];
     if (!xy) return '<span aria-hidden="true" style="display:flex;width:90px;height:90px;align-items:center;justify-content:center;margin:0 auto 10px;border-radius:16px;background:#14264b;color:#f3d27a;font-weight:bold;font-size:24px">' + esc(initials(name)) + '</span>';
-    return '<span role="img" aria-label="' + esc(name) + ' logo" style="display:block;position:relative;overflow:hidden;width:90px;height:90px;border-radius:14px;margin:0 auto 10px"><img src="assets/img/kpl-teams.jpeg" alt="" style="position:absolute;max-width:none!important;width:403.071px!important;height:403.071px!important;left:-' + (xy[0] * 90 / 280) + 'px;top:-' + (xy[1] * 90 / 280) + 'px"></span>';
+    return '<img src="assets/img/teams/' + xy + '.png" alt="' + esc(name) + ' logo" style="display:block;width:90px;height:90px;object-fit:contain;margin:0 auto 10px" onerror="this.style.display=\'none\'">';
   }
   function latestBlock(m, onMatchPage) {
     var mvp = m.mvp && m.mvp.player_ids.length ? m.mvp.player_ids : [];
